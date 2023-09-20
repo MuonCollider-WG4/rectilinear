@@ -1,0 +1,143 @@
+physics QGSP_BERT_EMX 
+
+param -unset first=1
+param -unset last=10
+
+param mode=1
+param ncells=75
+param pi=3.1415926
+param coilname1=coil1
+param coilname2=coil2
+param cell_length=600
+param solpos1=0.10151181346931476
+param coil_length1=100.36231486451844
+param coil_radius1=80.26219028736521
+param coil_width1=2.5*$coil_radius1 #419.59698753982804
+param current1=385.9331752100821
+param solpos2=0.17951756002063046
+param coil_length2=135.90126477689762
+param coil_radius2=200
+param coil_width2=400
+param current2=177.54249774071252
+param angle=1.5
+param bendpos=0.07
+param dipole=0.35
+param dipole_length=80
+param fringe_length=$dipole_length
+param wallthick=3
+param rf_length=73.36376552195316
+param rf_fre=0.704
+param rf_grad=30.25783790758442
+param rf_ph=21.45829808801224
+param wedge_window_length=0.01
+param rf_window_length=0.01
+param half_wedge_length=90
+param pipe_length=($cell_length-4*($rf_length+2*$wallthick))/2
+param wedge_apex=140
+param x_last=-1.48
+param y_last=-0.78
+param x_off=-0.9801144857554984
+param y_off=-0.9583554574522681
+
+param pres=35
+
+material H2 Z=1 A=1.01 density=0.000090*$pres pressure=$pres
+param cavity_gas=Vacuum
+#material cavity_gas H,0.99 O,0.01 density=0.0035 pressure=$pres
+#param worldMaterial=H2
+
+genericbend solbend fieldWidth=1000 fieldHeight=1000 fieldLength=$dipole_length \
+               ironWidth=-1 ironHeight=-1 ironLength=-1 \
+               openAperture=1 \
+               By=$dipole kill=1 fringe=0 ironColor=1,1,1
+
+
+fieldexpr fringe_left length=2*$fringe_length width=1000 height=1000 By=if(z<0,0,$dipole/($fringe_length)^2*z^2)
+fieldexpr fringe_right length=2*$fringe_length width=1000 height=1000 By=if(z>=0,0,$dipole/($fringe_length)^2*z^2)
+
+if $mode==1
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=$coil_radius1+$coil_width1
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+endif
+
+if $mode==2
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=$coil_radius1+$coil_width1
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+
+coil $coilname2 innerRadius=$coil_radius2 outerRadius=$coil_radius2+$coil_width2 length=$coil_length2 material=Cu maxZ=$cell_length maxR=$coil_radius2+$coil_width2
+solenoid sol3 coilName=$coilname2 current=$current2 kill=1 
+solenoid sol4 coilName=$coilname2 current=-$current2 kill=1 
+endif
+
+tubs pipe innerRadius=80 outerRadius=80.01 length=$pipe_length kill=1
+
+pillbox cavity innerLength=$rf_length irisRadius=2.405/(2*3.1415926*$rf_fre*10/3)*1000-20 frequency=$rf_fre maxGradient=$rf_grad phaseAcc=$rf_ph winMat=Be cavityMaterial=$cavity_gas win1Thick=$rf_window_length win2Thick=$rf_window_length collarThick=0 kill=1
+
+tubs wedge_window innerRadius=0 outerRadius=sqrt(2)*($half_wedge_length/2/tan($wedge_apex/2*$pi/180))+15-1 length=$wedge_window_length material=Be color=1,0,1
+trap all_wedge  height=2*$half_wedge_length/2/tan($wedge_apex/2*$pi/180) upperWidth=0.001 lowerWidth=2*$half_wedge_length length=2*$half_wedge_length/2/tan($wedge_apex/2*$pi/180) material=LH2
+
+
+if $mode==1
+do i -2 $ncells
+place sol1 z=$i*$cell_length+$solpos1*$cell_length
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+if $mode==2
+do i -2 $ncells
+place sol1 z=$i*$cell_length+$solpos1*$cell_length 
+place sol3 z=$i*$cell_length+$solpos2*$cell_length
+place sol4 z=$i*$cell_length+$cell_length-$solpos2*$cell_length 
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+do i -2 $ncells
+place solbend z=$i*$cell_length+$bendpos*$cell_length rename=solbend_a_$i
+place solbend z=$i*$cell_length+$cell_length-$bendpos*$cell_length rename=solbend_b_$i
+enddo
+
+do i -2 $ncells
+place fringe_left z=$i*$cell_length+$bendpos*$cell_length-$dipole_length/2-$fringe_length
+place fringe_right z=$i*$cell_length+$bendpos*$cell_length+$dipole_length/2+$fringe_length+0.01
+place fringe_left z=$i*$cell_length+$cell_length-$bendpos*$cell_length-$dipole_length/2-$fringe_length
+place fringe_right z=$i*$cell_length+$cell_length-$bendpos*$cell_length+$dipole_length/2+$fringe_length+0.01
+enddo
+
+do i 0 $ncells
+place pipe z=$i*$cell_length+$pipe_length/2
+place pipe z=$i*$cell_length+$cell_length-$pipe_length/2
+enddo
+
+
+do i 0 $ncells
+#place cavity z=$i*$cell_length+$cell_length/2-(2*$rf_length+2*2*$wallthick+$wallthick+$rf_length/2) rename=rf_a_$i
+place cavity z=$i*$cell_length+$cell_length/2-($rf_length+2*$wallthick+$wallthick+$rf_length/2) rename=rf_b_$i
+place cavity z=$i*$cell_length+$cell_length/2-($wallthick+$rf_length/2) rename=rf_c_$i
+place cavity z=$i*$cell_length+$cell_length/2+($wallthick+$rf_length/2) rename=rf_d_$i
+place cavity z=$i*$cell_length+$cell_length/2+($rf_length+2*$wallthick+$wallthick+$rf_length/2) rename=rf_e_$i
+#place cavity z=$i*$cell_length+$cell_length/2+(2*$rf_length+2*2*$wallthick+$wallthick+$rf_length/2) rename=rf_f_$i
+enddo
+
+do i 0 $ncells
+place all_wedge z=$i*$cell_length  rotation=X90,Y90 x=$x_off-0.5 rename=wedge_$i
+enddo
+
+do i 0 $ncells
+place wedge_window z=$i*$cell_length-$half_wedge_length-$wedge_window_length/2
+place wedge_window z=$i*$cell_length+$half_wedge_length+$wedge_window_length/2
+enddo
+
+
+reference particle=mu+ referenceMomentum=200 beamT=1300.48 beamX=$x_off beamY=$y_off #beamX=$x_off beamY=$y_off noEfield=1 noBfield=1 noEloss=1
+beam ascii file=beam_stage7.beam firstEvent=$first lastEvent=$last beamX=$x_off-$x_last beamY=$y_off-$y_last
+
+trackcuts killSecondaries=1
+#zntuple z=$cell_length filename=final
+trace nTrace=1
+
+#printfield type=grid file=field_cell.dat field=Bx,By,Bz X0=-180 Y0=-180 Z0=0 nX=61 dX=6 nY=61 dY=6 nZ=201 dZ=$cell_length/200
+zntuple output zloop=0:$ncells*$cell_length:$cell_length format=for009 require=PDGid==-13 file=particles_info.txt referenceParticle=1
