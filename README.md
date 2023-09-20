@@ -1,5 +1,5 @@
 # rectilinear (Edited by Ruihu Zhu)
-These are lattice files for a 10-stage rectilinear cooling channel. These files are the basis for my future NIMA paper.
+These are lattice files for a 10-stage rectilinear cooling channel. These files are the basis for my future NIMA paper. G4Beamline-3.08 is used.
 The whole simulation is done stage by stage. Once you have run the simulation for a stage, you will get a 'for009.dat'-type file and then you can use ecalc9f to analyze the beam properties.
 
 1. Folder name: 
