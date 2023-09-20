@@ -7,5 +7,9 @@ The 'param -unset first' and 'param -unset last' are used to control the event n
 The fringe field of the dipole magnet is a simple quadratic function now.
 'param mode' means the number of solenoid pairs in one cell. Since for now each cell has only one pair of solenoids, the mode is one.
 The window material for wedge and RF are Be.
-3. Emittance output file:
+4.Input beam file:
+Its name is 'beam_stage.... .beam'.
+5. Emittance output file:
 Its name is 'ecalc9f_...' obtained from the program 'Ecalc9f' which is used in MAP.
+6. for009.dat:
+This type of file is the output at the end of each cooling cell.
