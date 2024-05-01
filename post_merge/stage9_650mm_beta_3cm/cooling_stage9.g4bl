@@ -3,7 +3,7 @@ physics QGSP_BERT_EMX
 param -unset first=1
 param -unset last=10
 
-param ncells=70
+param ncells=65
 param pi=3.1415926
 param coilname1=coil1
 param coilname2=coil2
@@ -27,20 +27,20 @@ param pipe_diameter=2*$pipe_radius
 param fringe_length=4*$pipe_radius
 param rf_length=95
 param rf_fre=0.704
-param rf_grad=18.319525861568465
-param rf_ph=18.67545408046572
+param rf_grad=27.67449777657395
+param rf_ph=12.168501742170356
 param wedge_window_length=0.01
 param rf_window_length=0.01
 param wallthick=$rf_window_length
 param half_wedge_length=75
 param pipe_length=($cell_length-4*($rf_length+2*$wallthick))/2
 param wedge_apex=140
-param x_last=-0.89
-param y_last=-1.72
-param x_off=-0.9554588557845609
-param y_off=-1.7775909449105503
+param x_last=-0.783
+param y_last=-1.95
+param x_off=-0.7798614837676878
+param y_off=-1.7689897010123463
 param wedge_x_off=-3.25
-param ref_momentum=199
+param ref_momentum=194
 
 param pres=35
 
@@ -116,7 +116,7 @@ place wedge_window z=$i*$cell_length+$half_wedge_length/2+$wedge_window_length/(
 enddo
 
 
-reference particle=mu+ referenceMomentum=$ref_momentum beamT=1657.83 beamX=$x_off beamY=$y_off
+reference particle=mu+ referenceMomentum=$ref_momentum beamT=1692.56 beamX=$x_off beamY=$y_off
 beam ascii file=beam_stage9.beam firstEvent=$first lastEvent=$last beamX=$x_off-$x_last beamY=$y_off-$y_last
 
 trackcuts killSecondaries=1

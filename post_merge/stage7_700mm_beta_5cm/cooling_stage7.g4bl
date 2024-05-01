@@ -27,8 +27,8 @@ param pipe_diameter=2*$pipe_radius
 param fringe_length=4*$pipe_radius
 param rf_length=95
 param rf_fre=0.704
-param rf_grad=30.220331960984886
-param rf_ph=18.313286419566253
+param rf_grad=31.28656215090776
+param rf_ph=17.40882326241271
 param wedge_window_length=0.02
 param rf_window_length=0.02
 param wallthick=$rf_window_length
@@ -37,10 +37,10 @@ param pipe_length=($cell_length-4*($rf_length+2*$wallthick))/2
 param wedge_apex=130
 param x_last=-2.11
 param y_last=-2.43
-param x_off=-1.3676566833312878
-param y_off=-2.401199759309258
+param x_off=-1.4612647255006292
+param y_off=-2.4089358226213307
 param wedge_x_off=-1.75
-param ref_momentum=199
+param ref_momentum=201
 
 param pres=35
 
@@ -124,4 +124,4 @@ trackcuts killSecondaries=1
 trace nTrace=1
 
 #printfield type=grid file=field_cell.dat field=Bx,By,Bz X0=-180 Y0=-180 Z0=0 nX=61 dX=6 nY=61 dY=6 nZ=201 dZ=$cell_length/200
-zntuple output zloop=0:$ncells*$cell_length:$cell_length format=for009 require=PDGid==-13 file=particles_info.txt referenceParticle=1
+zntuple output zloop=0:$ncells*$cell_length:$cell_length format=for009 require=PDGid==-13 file=particles_info.txt referenceParticle=11

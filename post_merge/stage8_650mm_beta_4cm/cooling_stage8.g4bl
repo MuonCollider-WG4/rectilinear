@@ -3,44 +3,44 @@ physics QGSP_BERT_EMX
 param -unset first=1
 param -unset last=10
 
-param ncells=65
+param ncells=80
 param pi=3.1415926
 param coilname1=coil1
 param coilname2=coil2
 param cell_length=650
-param solpos1=0.08139043616179815
-param coil_length1=76.27094363322949
-param coil_radius1=35
-param coil_width1=70
-param current1=293.3704343583862
-param solpos2=0.21442612441551157
-param coil_length2=231.43706960953574
+param solpos1=0.07434817032885586
+param coil_length1=68.57273417212645
+param coil_radius1=30
+param coil_width1=65
+param current1=338.74546381040193
+param solpos2=0.24672473671065084
+param coil_length2=167.96162888632435
 param coil_radius2=220
 param coil_width2=250
-param current2=221.66426792371487
+param current2=277.22675079276735
 param angle=1.5
 param bendpos=0.1
-param dipole=0.135
+param dipole=0.165
 param dipole_length=100
-param pipe_radius=33
+param pipe_radius=30
 param pipe_diameter=2*$pipe_radius
 param fringe_length=4*$pipe_radius
 param rf_length=95
 param rf_fre=0.704
-param rf_grad=22.122294174985868
-param rf_ph=14.511902739618488
+param rf_grad=26.867536714725436
+param rf_ph=12.811670362922008
 param wedge_window_length=0.02
 param rf_window_length=0.02
 param wallthick=$rf_window_length
-param half_wedge_length=60
+param half_wedge_length=70
 param pipe_length=($cell_length-4*($rf_length+2*$wallthick))/2
 param wedge_apex=140
-param x_last=-1.77
-param y_last=-2.53
-param x_off=-0.7955052709933188
-param y_off=-1.6613682026353018
+param x_last=-1.89
+param y_last=-2.49
+param x_off=-1.0473579486570048
+param y_off=-1.9157505407621804
 param wedge_x_off=-1
-param ref_momentum=197
+param ref_momentum=202
 
 param pres=35
 
@@ -66,9 +66,9 @@ coil $coilname2 innerRadius=$coil_radius2 outerRadius=$coil_radius2+$coil_width2
 solenoid sol3 coilName=$coilname2 current=$current2 kill=1 
 solenoid sol4 coilName=$coilname2 current=-$current2 kill=1 
 
-tubs pipe innerRadius=$pipe_radius-7 outerRadius=$pipe_radius-7+1 length=$pipe_length kill=1
+tubs pipe innerRadius=$pipe_radius-3.5 outerRadius=$pipe_radius-3.5+1 length=$pipe_length kill=1
 
-pillbox cavity innerLength=$rf_length irisRadius=$pipe_radius-7 frequency=$rf_fre maxGradient=$rf_grad phaseAcc=$rf_ph winMat=Be cavityMaterial=$cavity_gas win1OuterRadius=10 win1Thick=$rf_window_length win2Thick=$rf_window_length wallThick=$wallthick collarThick=0 kill=1
+pillbox cavity innerLength=$rf_length irisRadius=$pipe_radius-3.5 frequency=$rf_fre maxGradient=$rf_grad phaseAcc=$rf_ph winMat=Be cavityMaterial=$cavity_gas win1OuterRadius=10 win1Thick=$rf_window_length win2Thick=$rf_window_length wallThick=$wallthick collarThick=0 kill=1
 
 box wedge_window height=2*$half_wedge_length/2/tan($wedge_apex/2*$pi/180) length=$wedge_window_length width=2*$half_wedge_length/2/sin($wedge_apex/2*$pi/180) material=Be
 trap all_wedge  height=2*$half_wedge_length/2/tan($wedge_apex/2*$pi/180) upperWidth=0.001 lowerWidth=2*$half_wedge_length length=2*$half_wedge_length/2/tan($wedge_apex/2*$pi/180) material=LH2
@@ -116,7 +116,7 @@ place wedge_window z=$i*$cell_length+$half_wedge_length/2+$wedge_window_length/(
 enddo
 
 
-reference particle=mu+ referenceMomentum=$ref_momentum beamT=1512.82 beamX=$x_off beamY=$y_off
+reference particle=mu+ referenceMomentum=$ref_momentum beamT=1512.67 beamX=$x_off beamY=$y_off
 beam ascii file=beam_stage8.beam firstEvent=$first lastEvent=$last beamX=$x_off-$x_last beamY=$y_off-$y_last
 
 trackcuts killSecondaries=1
