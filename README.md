@@ -8,3 +8,5 @@ Folder 'pre_merge' is the previous version for the part before the bunch merge s
 Folder 'post_merge' is the previous version for the part after the bunch merge system.
 
 Folder '2024-6-14_lattice_files' is the latest version corresponding to a paper in preparation.
+
+Folder '2024-8-12_lattice_files' has different solenoids in B-stage 1 to 4 and RF setting in other B-stages are changed compared to '2024-6-14_lattice_files'. Lattice of the pre-merge does not change.
