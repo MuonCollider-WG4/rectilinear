@@ -9,4 +9,4 @@ Folder 'post_merge' is the previous version for the part after the bunch merge s
 
 Folder '2024-6-14_lattice_files' is the latest version corresponding to a paper in preparation.
 
-Folder '2024-8-12_lattice_files' has different solenoids in B-stage 1 to 4 and RF setting in other B-stages are changed compared to '2024-6-14_lattice_files'. Lattice of the pre-merge does not change.
+Folder '2024-8-12_lattice_files' has different solenoids in B-stage 1 to 4 and RF settings in other B-stages are changed compared to '2024-6-14_lattice_files'. Lattice of the pre-merge does not change. Also there is a spreadsheet including maximum Bz field in the coils, energy density and stress of the coils. However, these values are from the formulas for single coil. I guess, for the multiple coils and the coils in periodic cells, these values should be smaller.
