@@ -1,0 +1,160 @@
+physics QGSP_BERT_EMX doStochastics=0 disable=Decay list=1
+
+param snake=0
+param mode=3
+param coilname1=coil1
+param coilname2=coil2
+param coilname3=coil3
+param coilname4=coil4
+param cell_length=780
+param solpos1=0.12101042519401022
+param coil_length1=111.58891157032251
+param coil_radius1=50
+param coil_width1=80
+param current1=244.99309863186846
+param solpos2=0.12308564658169784
+param coil_length2=118.390054226849
+param coil_radius2=160
+param coil_width2=150
+param current2=132.8427918966737
+param solpos3=0.1097806148150967
+param coil_length3=66.10621105723652
+param coil_radius3=340
+param coil_width3=200
+param current3=134.97561132428908
+param solpos4=0.175129971063173
+param coil_length4=99.16178350389256
+param coil_radius4=310
+param coil_width4=200
+param current4=108.11786807976868
+
+if $mode==1
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=($coil_radius1+4*$coil_width1) #tolerance=0.01
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+endif
+
+if $mode==2
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=$coil_radius1+4*$coil_width1 #tolerance=0.01
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+
+coil $coilname2 innerRadius=$coil_radius2 outerRadius=$coil_radius2+$coil_width2 length=$coil_length2 material=Cu maxZ=$cell_length maxR=$coil_radius2+4*$coil_width2 #tolerance=0.01
+solenoid sol3 coilName=$coilname2 current=$current2 kill=1 
+solenoid sol4 coilName=$coilname2 current=-$current2 kill=1 
+endif
+
+if $mode==3
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=$coil_radius1+4*$coil_width1 #tolerance=0.01
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+
+coil $coilname2 innerRadius=$coil_radius2 outerRadius=$coil_radius2+$coil_width2 length=$coil_length2 material=Cu maxZ=$cell_length maxR=$coil_radius2+4*$coil_width2 #tolerance=0.01
+solenoid sol3 coilName=$coilname2 current=$current2 kill=1 
+solenoid sol4 coilName=$coilname2 current=-$current2 kill=1 
+
+coil $coilname3 innerRadius=$coil_radius3 outerRadius=$coil_radius3+$coil_width3 length=$coil_length3 material=Cu maxZ=$cell_length maxR=$coil_radius3+4*$coil_width3 #tolerance=0.01
+solenoid sol5 coilName=$coilname3 current=$current3 kill=1 
+solenoid sol6 coilName=$coilname3 current=-$current3 kill=1 
+endif
+
+if $mode==4
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=$coil_radius1+4*$coil_width1 #tolerance=0.01
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+
+coil $coilname2 innerRadius=$coil_radius2 outerRadius=$coil_radius2+$coil_width2 length=$coil_length2 material=Cu maxZ=$cell_length maxR=$coil_radius2+4*$coil_width2 #tolerance=0.01
+solenoid sol3 coilName=$coilname2 current=$current2 kill=1 
+solenoid sol4 coilName=$coilname2 current=-$current2 kill=1 
+
+coil $coilname3 innerRadius=$coil_radius3 outerRadius=$coil_radius3+$coil_width3 length=$coil_length3 material=Cu maxZ=$cell_length maxR=$coil_radius3+4*$coil_width3 #tolerance=0.01
+solenoid sol5 coilName=$coilname3 current=$current3 kill=1 
+solenoid sol6 coilName=$coilname3 current=-$current3 kill=1 
+
+coil $coilname4 innerRadius=$coil_radius4 outerRadius=$coil_radius4+$coil_width4 length=$coil_length4 material=Cu maxZ=$cell_length maxR=$coil_radius4+4*$coil_width4 #tolerance=0.01
+solenoid sol7 coilName=$coilname4 current=$current4 kill=1 
+solenoid sol8 coilName=$coilname4 current=-$current4 kill=1 
+endif
+
+#tubs pipe outerRadius=140 length=$cell_length kill=1
+
+if $snake==1
+if $mode==1
+do i -5 5
+place sol1 z=$i*$cell_length+$solpos1*$cell_length/2 
+place sol2 z=$i*$cell_length+$cell_length/2-$solpos1*$cell_length/2 
+place sol2 z=$i*$cell_length+$cell_length/2+$solpos1*$cell_length/2 
+place sol1 z=$i*$cell_length+$cell_length-$solpos1*$cell_length/2 
+enddo
+endif
+
+if $mode==2
+do i -5 5
+place sol1 z=$i*$cell_length+$solpos1*$cell_length/2 
+place sol3 z=$i*$cell_length+$solpos2*$cell_length/2 
+place sol4 z=$i*$cell_length+$cell_length/2-$solpos2*$cell_length/2 
+place sol2 z=$i*$cell_length+$cell_length/2-$solpos1*$cell_length/2 
+place sol2 z=$i*$cell_length+$cell_length/2+$solpos1*$cell_length/2 
+place sol4 z=$i*$cell_length+$cell_length/2+$solpos2*$cell_length/2 
+place sol3 z=$i*$cell_length+$cell_length-$solpos2*$cell_length/2 
+place sol1 z=$i*$cell_length+$cell_length-$solpos1*$cell_length/2 
+enddo
+endif
+endif
+
+if $snake==0
+if $mode==1
+do i -5 5
+place sol1 z=$i*$cell_length+$solpos1*$cell_length
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+if $mode==2
+do i -5 5
+place sol1 z=$i*$cell_length+$solpos1*$cell_length
+place sol3 z=$i*$cell_length+$solpos2*$cell_length 
+place sol4 z=$i*$cell_length+$cell_length-$solpos2*$cell_length 
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+if $mode==3
+do i -5 5
+place sol1 z=$i*$cell_length+$solpos1*$cell_length
+place sol3 z=$i*$cell_length+$solpos2*$cell_length 
+place sol5 z=$i*$cell_length+$solpos3*$cell_length 
+place sol6 z=$i*$cell_length+$cell_length-$solpos3*$cell_length 
+place sol4 z=$i*$cell_length+$cell_length-$solpos2*$cell_length 
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+if $mode==4
+do i -5 5
+place sol1 z=$i*$cell_length+$solpos1*$cell_length
+place sol3 z=$i*$cell_length+$solpos2*$cell_length 
+place sol5 z=$i*$cell_length+$solpos3*$cell_length 
+place sol7 z=$i*$cell_length+$solpos4*$cell_length 
+place sol8 z=$i*$cell_length-$solpos4*$cell_length 
+place sol6 z=$i*$cell_length+$cell_length-$solpos3*$cell_length 
+place sol4 z=$i*$cell_length+$cell_length-$solpos2*$cell_length 
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+endif
+
+#do i 0 2
+#place pipe z=$i*$cell_length+$cell_length/2
+#enddo
+
+printfield type=grid file=field_cell_stress.dat field=Bx,By,Bz X0=0 Y0=$coil_radius1 Z0=$solpos1*$cell_length nX=1 dX=1 nY=2 dY=$coil_width1 nZ=1 dZ=1
+
+if $mode==3
+printfield type=grid file=field_cell_stress2.dat field=Bx,By,Bz X0=0 Y0=$coil_radius2 Z0=$solpos2*$cell_length nX=1 dX=1 nY=2 dY=$coil_width2 nZ=1 dZ=1
+endif
+
+if $mode==4
+printfield type=grid file=field_cell_stress2.dat field=Bx,By,Bz X0=0 Y0=$coil_radius2 Z0=$solpos2*$cell_length nX=1 dX=1 nY=2 dY=$coil_width2 nZ=1 dZ=1
+printfield type=grid file=field_cell_stress3.dat field=Bx,By,Bz X0=0 Y0=$coil_radius3 Z0=$solpos3*$cell_length nX=1 dX=1 nY=2 dY=$coil_width3 nZ=1 dZ=1
+endif

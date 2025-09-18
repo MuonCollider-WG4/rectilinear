@@ -1,0 +1,289 @@
+physics QGSP_BERT_EMX doStochastics=0 disable=Decay 
+
+param mode=3
+param physical=1
+param pi=3.1415926
+param coilname1=coil1
+param coilname2=coil2
+param coilname3=coil3
+param coilname4=coil4
+param cell_length=780
+param solpos1=0.10011367615429359
+param coil_length1=120.38740169437966
+param coil_radius1=53
+param coil_width1=80
+param current1=222.9971220206919
+param solpos2=0.1706563510028725
+param coil_length2=70.18075474288861
+param coil_radius2=163
+param coil_width2=150
+param current2=107.27771763956034
+param solpos3=0.23790669255906333
+param coil_length3=236.865849696550
+param coil_radius3=343
+param coil_width3=200
+param current3=106.56628357742449
+param solpos4=0.14229686651276985
+param coil_length4=133.37369827581156
+param coil_radius4=310
+param coil_width4=200
+param current4=117.12098012978761
+param angle=1.5
+param bendpos=0.1
+param dipole=0.153
+param dipole_length=100
+param pipe_radius=23
+param pipe_diameter=2*$pipe_radius
+param fringe_length=4*$pipe_radius
+param rf_length=80
+param rf_fre=0.704
+param rf_grad=22
+param rf_ph=25
+param wedge_window_length=0.05
+param rf_window_length=0.01
+param wallthick=$rf_window_length
+param half_wedge_length=75
+param wedge_apex=140
+param x_off=0
+param y_off=0
+param pres=20 #35
+param ref_momentum=196
+
+material LiH LITHIUM_HYDRIDE,1 density=0.693
+material H2 Z=1 A=1.01 density=0.000090*$pres pressure=$pres
+param cavity_gas=Vacuum
+#material cavity_gas H,0.99 O,0.01 density=0.0035*20/35 pressure=$pres
+#param worldMaterial=H2
+
+
+genericbend solbend fieldWidth=1000 fieldHeight=1000 fieldLength=$dipole_length \
+               ironWidth=-1 ironHeight=-1 ironLength=-1 \
+               openAperture=1 \
+               By=$dipole kill=1 fringe=0 ironColor=1,1,1
+
+
+if $mode==1
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=($coil_radius1+4*$coil_width1) #tolerance=0.02
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+endif
+
+if $mode==2
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=($coil_radius1+4*$coil_width1) #tolerance=0.02
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+
+coil $coilname2 innerRadius=$coil_radius2 outerRadius=$coil_radius2+$coil_width2 length=$coil_length2 material=Cu maxZ=$cell_length maxR=($coil_radius2+4*$coil_width2) #tolerance=0.02
+solenoid sol3 coilName=$coilname2 current=$current2 kill=1 
+solenoid sol4 coilName=$coilname2 current=-$current2 kill=1 
+endif
+
+if $mode==3
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=$coil_radius1+4*$coil_width1 #tolerance=0.01
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+
+coil $coilname2 innerRadius=$coil_radius2 outerRadius=$coil_radius2+$coil_width2 length=$coil_length2 material=Cu maxZ=$cell_length maxR=$coil_radius2+4*$coil_width2 #tolerance=0.01
+solenoid sol3 coilName=$coilname2 current=$current2 kill=1 
+solenoid sol4 coilName=$coilname2 current=-$current2 kill=1 
+
+coil $coilname3 innerRadius=$coil_radius3 outerRadius=$coil_radius3+$coil_width3 length=$coil_length3 material=Cu maxZ=$cell_length maxR=$coil_radius3+4*$coil_width3 #tolerance=0.01
+solenoid sol5 coilName=$coilname3 current=$current3 kill=1 
+solenoid sol6 coilName=$coilname3 current=-$current3 kill=1 
+endif
+
+if $mode==4
+coil $coilname1 innerRadius=$coil_radius1 outerRadius=$coil_radius1+$coil_width1 length=$coil_length1 material=Cu maxZ=$cell_length maxR=$coil_radius1+4*$coil_width1 #tolerance=0.01
+solenoid sol1 coilName=$coilname1 current=$current1 kill=1 
+solenoid sol2 coilName=$coilname1 current=-$current1 kill=1 
+
+coil $coilname2 innerRadius=$coil_radius2 outerRadius=$coil_radius2+$coil_width2 length=$coil_length2 material=Cu maxZ=$cell_length maxR=$coil_radius2+4*$coil_width2 #tolerance=0.01
+solenoid sol3 coilName=$coilname2 current=$current2 kill=1 
+solenoid sol4 coilName=$coilname2 current=-$current2 kill=1 
+
+coil $coilname3 innerRadius=$coil_radius3 outerRadius=$coil_radius3+$coil_width3 length=$coil_length3 material=Cu maxZ=$cell_length maxR=$coil_radius3+4*$coil_width3 #tolerance=0.01
+solenoid sol5 coilName=$coilname3 current=$current3 kill=1 
+solenoid sol6 coilName=$coilname3 current=-$current3 kill=1 
+
+coil $coilname4 innerRadius=$coil_radius4 outerRadius=$coil_radius4+$coil_width4 length=$coil_length4 material=Cu maxZ=$cell_length maxR=$coil_radius4+4*$coil_width4 #tolerance=0.01
+solenoid sol7 coilName=$coilname4 current=$current4 kill=1 
+solenoid sol8 coilName=$coilname4 current=-$current4 kill=1 
+endif
+
+#tubs pipe innerRadius=180 outerRadius=190 length=$cell_length kill=1
+
+if $physical==0
+fieldexpr fringe_left length=2*$fringe_length width=1000 height=1000 By=if(z<0,0,$dipole/($fringe_length)^2*z^2)
+fieldexpr fringe_right length=2*$fringe_length width=1000 height=1000 By=if(z>=0,0,$dipole/($fringe_length)^2*z^2)
+endif
+
+if $physical==1
+fieldexpr fringe_left length=$fringe_length width=2*$pipe_radius height=2*$pipe_radius By=$dipole*((1+exp(3.5*-z/$pipe_diameter)*cos(3.5*y/$pipe_diameter))/(1+2*exp(3.5*-z/$pipe_diameter)*cos(3.5*y/$pipe_diameter)+exp(2*3.5*-z/$pipe_diameter))) Bz=-$dipole*exp(3.5*-z/$pipe_diameter)*sin(3.5*y/$pipe_diameter)/(1+2*exp(3.5*-z/$pipe_diameter)*cos(3.5*y/$pipe_diameter)+exp(2*3.5*-z/$pipe_diameter)) nX=2 nY=100 nZ=150 #tolerance=0.5
+fieldexpr fringe_right length=$fringe_length width=2*$pipe_radius height=2*$pipe_radius By=$dipole*((1+exp(3.5*z/$pipe_diameter)*cos(3.5*y/$pipe_diameter))/(1+2*exp(3.5*z/$pipe_diameter)*cos(3.5*y/$pipe_diameter)+exp(2*3.5*z/$pipe_diameter))) Bz=-$dipole*exp(3.5*z/$pipe_diameter)*sin(3.5*y/$pipe_diameter)/(1+2*exp(3.5*z/$pipe_diameter)*cos(3.5*y/$pipe_diameter)+exp(2*3.5*z/$pipe_diameter)) nX=2 nY=100 nZ=150 #tolerance=0.5
+endif
+
+tubs rf_window innerRadius=$pipe_radius outerRadius=$pipe_radius+1 length=$rf_window_length material=Be
+pillbox cavity innerLength=$rf_length irisRadius=$pipe_radius frequency=$rf_fre maxGradient=$rf_grad phaseAcc=$rf_ph winMat=Be cavityMaterial=$cavity_gas win1OuterRadius=10 win1Thick=$rf_window_length win2Thick=$rf_window_length collarThick=0 wallThick=$wallthick kill=1
+
+#pillbox cavity innerLength=$rf_length irisRadius=$pipe_radius frequency=$rf_fre maxGradient=$rf_grad phaseAcc=$rf_ph winMat=Be cavityMaterial=$cavity_gas win1OuterRadius=10 win1Thick=0 win2Thick=0 collarThick=0 wallThick=0 kill=1
+
+box wedge_window height=2*$half_wedge_length/2/tan($wedge_apex/2*$pi/180) length=$wedge_window_length width=2*$half_wedge_length/2/sin($wedge_apex/2*$pi/180) material=Be
+#tubs wedge_window innerRadius=0 outerRadius=sqrt(2)*($half_wedge_length/2/tan($wedge_apex/2*$pi/180))+15-1 length=$wedge_window_length material=Be color=1,0,1
+trap all_wedge  height=2*$half_wedge_length/2/tan($wedge_apex/2*$pi/180) upperWidth=0.001 lowerWidth=2*$half_wedge_length length=2*$half_wedge_length/2/tan($wedge_apex/2*$pi/180) material=LH2 #LITHIUM_HYDRIDE
+
+if $mode==1
+do i -2 4
+place sol1 z=$i*$cell_length+$solpos1*$cell_length
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+if $mode==2
+do i -2 4
+place sol1 z=$i*$cell_length+$solpos1*$cell_length 
+place sol3 z=$i*$cell_length+$solpos2*$cell_length
+place sol4 z=$i*$cell_length+$cell_length-$solpos2*$cell_length 
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+if $mode==3
+do i -2 4
+place sol1 z=$i*$cell_length+$solpos1*$cell_length
+place sol3 z=$i*$cell_length+$solpos2*$cell_length 
+place sol5 z=$i*$cell_length+$solpos3*$cell_length 
+place sol6 z=$i*$cell_length+$cell_length-$solpos3*$cell_length 
+place sol4 z=$i*$cell_length+$cell_length-$solpos2*$cell_length 
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+if $mode==4
+do i -2 4
+place sol1 z=$i*$cell_length+$solpos1*$cell_length
+place sol3 z=$i*$cell_length+$solpos2*$cell_length 
+place sol5 z=$i*$cell_length+$solpos3*$cell_length 
+place sol7 z=$i*$cell_length+$solpos4*$cell_length 
+place sol8 z=$i*$cell_length-$solpos4*$cell_length 
+place sol6 z=$i*$cell_length+$cell_length-$solpos3*$cell_length 
+place sol4 z=$i*$cell_length+$cell_length-$solpos2*$cell_length 
+place sol2 z=$i*$cell_length+$cell_length-$solpos1*$cell_length
+enddo
+endif
+
+do i -2 4
+place solbend z=$i*$cell_length+$bendpos*$cell_length
+place solbend z=$i*$cell_length+$cell_length-$bendpos*$cell_length
+enddo
+
+if $physical==0
+do i -2 4
+place fringe_left z=$i*$cell_length+$bendpos*$cell_length-$dipole_length/2-$fringe_length
+place fringe_right z=$i*$cell_length+$bendpos*$cell_length+$dipole_length/2+$fringe_length+0.01
+place fringe_left z=$i*$cell_length+$cell_length-$bendpos*$cell_length-$dipole_length/2-$fringe_length
+place fringe_right z=$i*$cell_length+$cell_length-$bendpos*$cell_length+$dipole_length/2+$fringe_length+0.01
+enddo
+endif
+
+if $physical==1
+do i -2 4
+place fringe_left z=$i*$cell_length+$bendpos*$cell_length-$dipole_length/2-$fringe_length/2
+place fringe_right z=$i*$cell_length+$bendpos*$cell_length+$dipole_length/2+$fringe_length/2+0.01
+place fringe_left z=$i*$cell_length+$cell_length-$bendpos*$cell_length-$dipole_length/2-$fringe_length/2
+place fringe_right z=$i*$cell_length+$cell_length-$bendpos*$cell_length+$dipole_length/2+$fringe_length/2+0.01
+enddo
+endif
+
+#do i 0 2
+#place pipe z=$i*$cell_length+$cell_length/2
+#enddo
+
+#do i 0 4
+#place cavity z=$i*$cell_length+$cell_length/4-($wallthick+$rf_length/2) rename=rf_a_$i
+#place cavity z=$i*$cell_length+$cell_length/4+($wallthick+$rf_length/2) rename=rf_b_$i
+
+#place cavity z=$i*$cell_length+$cell_length*3/4-($wallthick+$rf_length/2) rename=rf_c_$i
+#place cavity z=$i*$cell_length+$cell_length*3/4+($wallthick+$rf_length/2) rename=rf_d_$i
+#enddo
+
+#do i 0 4 
+#place rf_window z=$i*$cell_length+$cell_length/4-2*($rf_window_length/2+$rf_length/2)
+#place cavity z=$i*$cell_length+$cell_length/4-($rf_window_length/2+$rf_length/2) rename=rf_a_$i
+#place rf_window z=$i*$cell_length+$cell_length/4
+#place cavity z=$i*$cell_length+$cell_length/4+($rf_window_length/2+$rf_length/2) rename=rf_b_$i
+#place rf_window z=$i*$cell_length+$cell_length/4+2*($rf_window_length/2+$rf_length/2)
+
+#place rf_window z=$i*$cell_length+3*$cell_length/4-2*($rf_window_length/2+$rf_length/2)
+#place cavity z=$i*$cell_length+$cell_length*3/4-($rf_window_length/2+$rf_length/2) rename=rf_c_$i
+#place rf_window z=$i*$cell_length+3*$cell_length/4
+#place cavity z=$i*$cell_length+$cell_length*3/4+($rf_window_length/2+$rf_length/2) rename=rf_d_$i
+#place rf_window z=$i*$cell_length+3*$cell_length/4+2*($rf_window_length/2+$rf_length/2)
+#enddo
+
+#do i 0 4
+#place rf_window z=$i*$cell_length+$cell_length/2-3*($rf_window_length/2+$rf_length/2)
+#place cavity z=$i*$cell_length+$cell_length/2-2*($rf_window_length/2+$rf_length/2) rename=rf_a_$i
+#place rf_window z=$i*$cell_length+$cell_length/2-($rf_window_length/2+$rf_length/2)
+#place cavity z=$i*$cell_length+$cell_length/2 rename=rf_b_$i
+#place rf_window z=$i*$cell_length+$cell_length/2+($rf_window_length/2+$rf_length/2)
+#place cavity z=$i*$cell_length+$cell_length/2+2*($rf_window_length/2+$rf_length/2) rename=rf_c_$i
+#place rf_window z=$i*$cell_length+$cell_length/2+3*($rf_window_length/2+$rf_length/2)
+#enddo
+
+#do i 0 4
+#place cavity z=$i*$cell_length+$cell_length/2-(3*$rf_length+3*2*$wallthick+$wallthick+$rf_length/2) rename=rf_aa_$i
+#place cavity z=$i*$cell_length+$cell_length/2-(2*$rf_length+2*2*$wallthick+$wallthick+$rf_length/2) rename=rf_a_$i
+#place cavity z=$i*$cell_length+$cell_length/2-($rf_length+2*$wallthick+$wallthick+$rf_length/2) rename=rf_b_$i
+#place cavity z=$i*$cell_length+$cell_length/2-($wallthick+$rf_length/2) rename=rf_c_$i
+#place cavity z=$i*$cell_length+$cell_length/2+($wallthick+$rf_length/2) rename=rf_d_$i
+#place cavity z=$i*$cell_length+$cell_length/2+($rf_length+2*$wallthick+$wallthick+$rf_length/2) rename=rf_e_$i
+#place cavity z=$i*$cell_length+$cell_length/2+(2*$rf_length+2*2*$wallthick+$wallthick+$rf_length/2) rename=rf_f_$i
+#place cavity z=$i*$cell_length+$cell_length/2+(3*$rf_length+3*2*$wallthick+$wallthick+$rf_length/2) rename=rf_ff_$i
+#enddo
+
+#do i 0 4
+#place cavity z=$i*$cell_length+$cell_length/4-(2*$wallthick+$rf_length) rename=rf_a_$i
+#place cavity z=$i*$cell_length+$cell_length/4 rename=rf_b_$i
+#place cavity z=$i*$cell_length+$cell_length/4+(2*$wallthick+$rf_length) rename=rf_c_$i
+
+#place cavity z=$i*$cell_length+3*$cell_length/4-(2*$wallthick+$rf_length) rename=rf_d_$i
+#place cavity z=$i*$cell_length+3*$cell_length/4 rename=rf_e_$i
+#place cavity z=$i*$cell_length+3*$cell_length/4+(2*$wallthick+$rf_length) rename=rf_f_$i
+#enddo
+
+do i 0 4
+#place cavity z=$i*$cell_length+$cell_length/2-(6*$wallthick+3*$rf_length) rename=rf_a_$i
+#place cavity z=$i*$cell_length+$cell_length/2-(4*$wallthick+2*$rf_length) rename=rf_b_$i
+place cavity z=$i*$cell_length+$cell_length/2-(2*$wallthick+$rf_length) rename=rf_c_$i
+place cavity z=$i*$cell_length+$cell_length/2 rename=rf_d_$i
+place cavity z=$i*$cell_length+$cell_length/2+(2*$wallthick+$rf_length) rename=rf_e_$i
+#place cavity z=$i*$cell_length+$cell_length/2+(4*$wallthick+2*$rf_length) rename=rf_f_$i
+#place cavity z=$i*$cell_length+$cell_length/2+(6*$wallthick+3*$rf_length) rename=rf_g_$i
+enddo
+
+
+do i 0 4
+place all_wedge z=$i*$cell_length rotation=X90,Y90 x=$x_off rename=wedge_$i
+#place all_wedge z=$i*$cell_length+$cell_length/2 rotation=X90,Y90 x=$x_off rename=wedge_b_$i
+enddo
+
+#do i 0 4
+#place wedge_window z=$i*$cell_length-$half_wedge_length-$wedge_window_length/2
+#place wedge_window z=$i*$cell_length+$half_wedge_length+$wedge_window_length/2
+#enddo
+
+do i 0 4
+place wedge_window z=$i*$cell_length-$half_wedge_length/2-$wedge_window_length/(cos($wedge_apex/2*$pi/180)) x=$x_off rotation=Y-$wedge_apex/2 color=1,0,1
+place wedge_window z=$i*$cell_length+$half_wedge_length/2+$wedge_window_length/(cos($wedge_apex/2*$pi/180)) x=$x_off rotation=Y$wedge_apex/2 color=1,0,1
+#place wedge_window z=$i*$cell_length+$cell_length/2-$half_wedge_length/2-$wedge_window_length/(cos($wedge_apex/2*$pi/180)) x=$x_off rotation=Y-$wedge_apex/2 color=1,0,1
+#place wedge_window z=$i*$cell_length+$cell_length/2+$half_wedge_length/2+$wedge_window_length/(cos($wedge_apex/2*$pi/180)) x=$x_off rotation=Y$wedge_apex/2 color=1,0,1
+enddo
+
+#printfield type=grid file=field_cell.dat field=Bx,By,Bz X0=-180 Y0=-180 Z0=$cell_length nX=61 dX=6 nY=61 dY=6 nZ=201 dZ=$cell_length/200
+
+reference particle=mu+ referenceMomentum=$ref_momentum beamT=0 beamX=$x_off beamY=$y_off
+beam ascii file=beam.dat
+
+trackcuts killSecondaries=1
+zntuple z=0,$cell_length filename=final
+trace nTrace=1

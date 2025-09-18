@@ -1,0 +1,4 @@
+#BLTrackFile solenoid_cooling_channel 
+#x y z Px Py Pz t PDGid EvNum TrkId Parent weight 
+#mm mm mm MeV/c MeV/c MeV/c ns 
+-0.7280269454401944 -2.6824352904999476 630 0 0 190 0 -13 1 1 0 1
